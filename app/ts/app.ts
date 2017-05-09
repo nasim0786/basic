@@ -49,11 +49,11 @@ class RoutesDemoApp {
 const routes: Routes = [
   { path: '', redirectTo: 'sites', pathMatch: 'full' },
   { path: 'sites', component: SiteComponent },
-  { path: 'sites/overview', redirectTo: 'about' },
-  { path: 'about', component: OverviewComponent },
-  { path: 'contact', component: EditComponent },
-  { path: 'contactus', redirectTo: 'contact' },
-  { path: 'about/contact', redirectTo: 'contact' },
+  { path: 'sites/overview', redirectTo: 'overview' },
+  { path: 'overview', component: OverviewComponent },
+  { path: 'edit', component: EditComponent },
+  { path: 'contactus', redirectTo: 'edit' },
+  { path: 'overview/edit', redirectTo: 'edit' },
 ];
 
 @NgModule({

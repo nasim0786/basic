@@ -34,8 +34,6 @@ require('css/styles.css');
       <a>Navigation:</a>
       <ul>
         <li><a [routerLink]="['home']">Home</a></li>
-        <li><a [routerLink]="['about']">About</a></li>
-        <li><a [routerLink]="['contact']">Contact Us</a></li>
       </ul>
     </nav>
 
@@ -49,13 +47,10 @@ class RoutesDemoApp {
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: SiteComponent },
-  { path: 'about', component: OverviewComponent },
-  { path: 'sites/overview', redirectTo: 'about' },
-  { path: 'contact', component: EditComponent },
-  { path: 'contactus', redirectTo: 'contact' },
-
-  { path: 'about/contact', redirectTo: 'contact' },
-  { path: 'about/contact', redirectTo: 'contact' }
+  { path: 'overview', component: OverviewComponent },
+  { path: 'sites/overview', redirectTo: 'overview' },
+  { path: 'edit', component: EditComponent },
+  { path: 'overview/edit', redirectTo: 'edit' },
 ];
 
 @NgModule({

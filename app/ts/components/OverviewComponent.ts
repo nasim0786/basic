@@ -6,7 +6,7 @@ import {Http, Response, Headers} from '@angular/http';
   template: `
     <div>
       <button>
-        <a [routerLink]="['contact']">
+        <a [routerLink]="['edit']">
           <span>Edit</span>
         </a>
       </button>
