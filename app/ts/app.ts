@@ -19,6 +19,7 @@ import { HttpModule } from '@angular/http';
 /*
  * Components
  */
+import {HomeComponent} from 'components/HomeComponent';
 import {SiteComponent} from 'components/SiteComponent';
 import {OverviewComponent} from 'components/OverviewComponent';
 import {EditComponent} from 'components/EditComponent';
@@ -36,7 +37,7 @@ require('css/styles.css');
     <nav>
       <a>Navigation:</a>
       <ul>
-        <li><a [routerLink]="['sites']">Home</a></li>
+        <li><a [routerLink]="['home']">Home</a></li>
       </ul>
     </nav>
 
@@ -54,7 +55,8 @@ class RoutesDemoApp implements OnInit {
 }
 
 const routes: Routes = [
-  { path: '', redirectTo: 'sites', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'sites', component: SiteComponent },
   { path: 'sites/:id/overview', component: OverviewComponent },
   { path: 'sites/overview/:id', redirectTo: 'sites/:id/overview' },
@@ -65,6 +67,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     RoutesDemoApp,
+    HomeComponent,
     SiteComponent,
     OverviewComponent,
     EditComponent

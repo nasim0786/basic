@@ -64,28 +64,27 @@ export class SiteComponent implements OnInit {
   list: Array<Object> = [];
   token1: string;
 
-  constructor(private http: Http, service: Service) {
-    this.token1 = service.getToken();
-    console.log('Md Nasim 12345');
-    console.log(this.token1);
+  constructor(private http: Http, private service: Service) {
   }
 
   getSites(): void {
-      var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
-      this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
-        .subscribe((res: Response) => {
-          this.token = res.json().token;
+    var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
+    this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
+      .subscribe((res: Response) => {
+        this.token = res.json().token;
 
-          var headers = new Headers();
-          headers.append('Content-Type', 'application/json');
-          headers.append('X-OS-API-TOKEN', this.token);
-          var url = 'http://localhost:8480/openspecimen/rest/ng/sites';
+        this.token1 = this.service.getToken();
 
-          this.http.get(url, {headers: headers})
-            .subscribe((res: Response) => {
-              this.list = res.json();
-            });
-        });
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-OS-API-TOKEN', this.token);
+        var url = 'http://localhost:8480/openspecimen/rest/ng/sites';
+
+        this.http.get(url, {headers: headers})
+          .subscribe((res: Response) => {
+            this.list = res.json();
+          });
+      });
     }
 
   ngOnInit() {
