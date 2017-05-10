@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
+import {Service} from './service';
 
 @Component({
   selector: 'home',
@@ -22,6 +23,9 @@ import {Http, Response, Headers} from '@angular/http';
                 <span>Type</span>
               </th>
               <th>
+                <span>Code</span>
+              </th>
+              <th>
                 <span>Activity Status</span>
               </th>
             </tr>
@@ -32,7 +36,7 @@ import {Http, Response, Headers} from '@angular/http';
                 {{item.id}}
               </td>
               <td>
-                <a [routerLink]="['overview']">
+                <a [routerLink]="['overview', item.id]">
                   <span>{{item.name}}</span>
                 </a>
               </td>
@@ -43,19 +47,27 @@ import {Http, Response, Headers} from '@angular/http';
                 {{item.type}}
               </td>
               <td>
+                {{item.code}}
+              </td>
+              <td>
                 {{item.activityStatus}}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    `
+    `,
+    providers:[Service]
 })
 export class SiteComponent implements OnInit {
   token: string;
   list: Array<Object> = [];
+  token1: string;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, service: Service) {
+    this.token1 = service.getToken();
+    console.log('Md Nasim 12345');
+    console.log(this.token1);
   }
 
   getSites(): void {

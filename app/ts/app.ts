@@ -3,7 +3,8 @@
  */
 import {
   NgModule,
-  Component
+  Component,
+  OnInit
 } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { HttpModule } from '@angular/http';
 import {SiteComponent} from 'components/SiteComponent';
 import {OverviewComponent} from 'components/OverviewComponent';
 import {EditComponent} from 'components/EditComponent';
+import {Service} from 'components/Service';
 
 /*
  * Webpack
@@ -43,17 +45,21 @@ require('css/styles.css');
   `
 })
 
-class RoutesDemoApp {
+class RoutesDemoApp implements OnInit {
+
+/*
+  ngOnInit() {
+      this.service.createToken();
+    }*/
 }
 
 const routes: Routes = [
   { path: '', redirectTo: 'sites', pathMatch: 'full' },
   { path: 'sites', component: SiteComponent },
-  { path: 'sites/overview', redirectTo: 'overview' },
-  { path: 'overview', component: OverviewComponent },
-  { path: 'edit', component: EditComponent },
-  { path: 'contactus', redirectTo: 'edit' },
-  { path: 'overview/edit', redirectTo: 'edit' },
+  { path: 'sites/:id/overview', component: OverviewComponent },
+  { path: 'sites/overview/:id', redirectTo: 'sites/:id/overview' },
+  { path: 'sites/:id/addedit', component: EditComponent },
+  { path: 'sites/:id/overview/addedit/:id', redirectTo: 'sites/:id/addedit' },
 ];
 
 @NgModule({
@@ -70,7 +76,7 @@ const routes: Routes = [
     FormsModule
   ],
   bootstrap: [ RoutesDemoApp ],
-  providers: [
+  providers: [Service,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 })
