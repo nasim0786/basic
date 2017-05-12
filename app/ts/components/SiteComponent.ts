@@ -62,9 +62,10 @@ import {Service} from './service';
 export class SiteComponent implements OnInit {
   token: string;
   list: Array<Object> = [];
-  token1: string;
+  globalToken: string;
 
   constructor(private http: Http, private service: Service) {
+    this.globalToken = service.getToken();
   }
 
   getSites(): void {
@@ -72,8 +73,6 @@ export class SiteComponent implements OnInit {
     this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
       .subscribe((res: Response) => {
         this.token = res.json().token;
-
-        this.token1 = this.service.getToken();
 
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');

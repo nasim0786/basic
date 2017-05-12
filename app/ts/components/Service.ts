@@ -1,21 +1,18 @@
 import {Http, Response} from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class Service {
-  static token: string;
+  token: string = '';
 
-  constructor(private http: Http) {
+  constructor(private _http: Http) {
   }
 
-  createToken(): any {
+  public createToken = (): Observable<any[]> => {
     var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
-    return this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
-      .subscribe((res: Response) => {
-        this.token = res.json().token;
-        return this.token;
-      });
+    return this._http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
+      .map((response: Response) => this.token = response.json().token);
   }
 
   getToken(): string {

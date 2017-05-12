@@ -59,7 +59,6 @@ export class OverviewComponent implements OnInit {
         this.http.get(url, {headers: headers})
           .subscribe((res: Response) => {
             this.site = res.json();
-            console.log(this.site);
           });
       });
   }

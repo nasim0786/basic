@@ -3,8 +3,7 @@
  */
 import {
   NgModule,
-  Component,
-  OnInit
+  Component
 } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -46,12 +45,7 @@ require('css/styles.css');
   `
 })
 
-class RoutesDemoApp implements OnInit {
-
-/*
-  ngOnInit() {
-      this.service.createToken();
-    }*/
+class RoutesDemoApp {
 }
 
 const routes: Routes = [
