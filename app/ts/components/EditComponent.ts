@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Service} from './service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'contact',
@@ -29,52 +31,38 @@ import { Router, ActivatedRoute } from '@angular/router';
         <button class="btn btn-danger" (click)="submit(site)">Submit</button>
       </form>
     </div>
-  `
+  `,
+     providers:[Service]
 })
 
 export class EditComponent implements OnInit {
-  token: string;
   site: Object = {};
   id: string;
 
-  constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: Http, private router: Router, private route: ActivatedRoute, private service: Service) {
     route.params.subscribe(params => { this.id = params['id']; });
   }
 
   getSite(): void {
-    var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
-    this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
+    var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
+    this.http.get(url, this.service.jwt())
       .subscribe((res: Response) => {
-        this.token = res.json().token;
-
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-OS-API-TOKEN', this.token);
-        var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
-
-        this.http.get(url, {headers: headers})
-          .subscribe((res: Response) => {
-            this.site = res.json();
-          });
+        this.site = res.json();
       });
   }
 
-    editSite(site: Object): void {
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('X-OS-API-TOKEN', this.token);
-      var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
+  editSite = (site: Object): Observable<void> =>  {
+    var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
+    return this.http.put(url, JSON.stringify(site), this.service.jwt())
+      .map((res: Response) => {
+        this.site = res.json();
+      });
+  }
 
-      this.http.put(url, JSON.stringify(site), {headers: headers})
-        .subscribe((res: Response) => {
-          this.site = res.json();
-        });
-    }
-
-    submit(site: Object): void {
-      this.router.navigate(['/sites'])
-        .then(_ => this.editSite(site) );
-    }
+  submit(site: Object): void {
+    this.editSite(site)
+      .subscribe((data: void) => this.router.navigate(['/sites']));
+  }
 
   ngOnInit() {
     this.getSite();

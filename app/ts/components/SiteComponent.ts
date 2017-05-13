@@ -65,24 +65,13 @@ export class SiteComponent implements OnInit {
   globalToken: string;
 
   constructor(private http: Http, private service: Service) {
-    this.globalToken = service.getToken();
   }
 
   getSites(): void {
-    var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
-    this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
+    var url = 'http://localhost:8480/openspecimen/rest/ng/sites';
+    this.http.get(url, this.service.jwt())
       .subscribe((res: Response) => {
-        this.token = res.json().token;
-
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-OS-API-TOKEN', this.token);
-        var url = 'http://localhost:8480/openspecimen/rest/ng/sites';
-
-        this.http.get(url, {headers: headers})
-          .subscribe((res: Response) => {
-            this.list = res.json();
-          });
+        this.list = res.json();
       });
     }
 

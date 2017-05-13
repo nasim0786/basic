@@ -13,13 +13,14 @@ import { Router } from '@angular/router';
 
 export class HomeComponent implements OnInit {
   token: any;
+
   constructor(private http: Http, private service: Service, private router: Router) {
   }
 
   private createToken(): void {
     this.service
-      .createToken()
-      .subscribe((data:any[]) => this.router.navigate(['/sites']));
+      .login()
+      .subscribe((data:void) => this.router.navigate(['/sites']));
   }
 
   ngOnInit() {

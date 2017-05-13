@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Http, Response, Headers} from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
+import {Service} from './service';
 
 @Component({
   selector: 'about',
@@ -34,32 +35,23 @@ import { ActivatedRoute } from '@angular/router';
       </div>
       <br>
     </div>
-  `
+  `,
+  providers:[Service]
 })
 export class OverviewComponent implements OnInit {
   token: string;
   site: Object = {};
   id: string;
 
-  constructor(private http: Http, private route: ActivatedRoute) {
+  constructor(private http: Http, private route: ActivatedRoute, private service: Service) {
     route.params.subscribe(params => { this.id = params['id']; });
   }
 
   getSite(): void {
-    var user = {loginName: 'admin', password: 'Login!@3', domainName: 'openspecimen'};
-    this.http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
+    var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
+    this.http.get(url, this.service.jwt())
       .subscribe((res: Response) => {
-        this.token = res.json().token;
-
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-OS-API-TOKEN', this.token);
-        var url = 'http://localhost:8480/openspecimen/rest/ng/sites/' + this.id;
-
-        this.http.get(url, {headers: headers})
-          .subscribe((res: Response) => {
-            this.site = res.json();
-          });
+        this.site = res.json();
       });
   }
 
