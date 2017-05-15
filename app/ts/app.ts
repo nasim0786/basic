@@ -1,32 +1,17 @@
-/*
- * Angular Imports
- */
-import {
-  NgModule,
-  Component
-} from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { HttpModule } from '@angular/http';
 
-/*
- * Components
- */
 import {HomeComponent} from 'components/HomeComponent';
 import {SiteComponent} from 'components/SiteComponent';
 import {OverviewComponent} from 'components/OverviewComponent';
 import {EditComponent} from 'components/EditComponent';
 import {Service} from 'components/Service';
 
-/*
- * Webpack
- */
 require('css/styles.css');
 
 @Component({
@@ -68,7 +53,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes), // <-- routes
+    RouterModule.forRoot(routes),
     HttpModule,
     FormsModule
   ],

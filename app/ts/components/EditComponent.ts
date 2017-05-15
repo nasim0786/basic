@@ -61,7 +61,7 @@ export class EditComponent implements OnInit {
 
   submit(site: Object): void {
     this.editSite(site)
-      .subscribe((data: void) => this.router.navigate(['/sites']));
+      .subscribe((data: void) => this.router.navigate(['sites/overview', this.id]));
   }
 
   ngOnInit() {

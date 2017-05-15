@@ -13,12 +13,12 @@ export class Service {
     let token = JSON.parse(localStorage.getItem('token'));
     
     return this._http.post('http://localhost:8480/openspecimen/rest/ng/sessions', user)
-    .map((response: Response) => {
-      let user = response.json();
-      if (user && user.token) {
-        localStorage.setItem('token', JSON.stringify(user.token));
-      }
-    });
+      .map((response: Response) => {
+        let user = response.json();
+        if (user && user.token) {
+          localStorage.setItem('token', JSON.stringify(user.token));
+        }
+      });
   }
 
   public jwt() {

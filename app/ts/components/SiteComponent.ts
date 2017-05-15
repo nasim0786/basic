@@ -62,7 +62,6 @@ import {Service} from './service';
 export class SiteComponent implements OnInit {
   token: string;
   list: Array<Object> = [];
-  globalToken: string;
 
   constructor(private http: Http, private service: Service) {
   }

@@ -12,18 +12,22 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent implements OnInit {
-  token: any;
 
   constructor(private http: Http, private service: Service, private router: Router) {
   }
 
-  private createToken(): void {
-    this.service
-      .login()
-      .subscribe((data:void) => this.router.navigate(['/sites']));
+  private login(): void {
+    let token = JSON.parse(localStorage.getItem('token'));
+    if (token) {
+      this.router.navigate(['/sites']);
+    } else {
+      this.service
+        .login()
+        .subscribe((data:void) => this.router.navigate(['/sites']));
+    }
   }
 
   ngOnInit() {
-    this.createToken();
+    this.login();
   }
 }
